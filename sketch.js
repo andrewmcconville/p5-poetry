@@ -1,8 +1,9 @@
 const twitch = new tmi.Client({
-  channels: ['LCK', 'KaiCenat'],
+  channels: ['LCK', 'KaiCenat', 'amouranth'],
 });
 
 let twitchMessages = [];
+let twitchMessagesBuffer = [];
 let twitchStory = "";
 let twitchBeforeDialogueTags = [
   "bellowed loudly claiming",
@@ -24,8 +25,9 @@ let twitchAfterDialogueTags = [
   "chimed in while giggling",
   "sang for all to hear",
 ];
-let twitchStoryTimer = 0;
-let nextMillis = twitchStoryTimer;
+let twitchStoryTimer = 3000;
+let nextMillis = 0;
+let twitchChatOutputPadding = 50;
 
 
 let sentences = [
@@ -47,19 +49,22 @@ function setup() {
     console.log('connected')
   });
   twitch.on('message', (channelName, tags, message, isSelf) => {
-    twitchMessages.push(
-      {
-        message: message,
-        username: tags.username,
-        isBeforeDialogTag: random() < 0.5 ? true : false,
-        dialogTag: random(twitchAfterDialogueTags),
-      }
-    );
-
-    if(twitchMessages.length > 8) {
-      twitchMessages.shift()
+    if(twitchMessages.length < 50) {
+      twitchMessages.push(
+        {
+          message: message,
+          username: tags.username,
+          isBeforeDialogTag: random() < 0.5 ? true : false,
+          dialogTag: random(twitchAfterDialogueTags),
+        }
+      );
     }
-    //console.log(tags);
+  });
+  twitchMessages.push({
+    message: "I'm connecting you now",
+    username: "Twitch bot",
+    isBeforeDialogTag: false,
+    dialogTag: "printed to the screen, then began to patiently listen",
   });
 
   createCanvas(windowWidth, windowHeight);
@@ -76,9 +81,21 @@ function draw() {
   background(180);
   
   if(millis() >= nextMillis) {
+    console.log(twitchMessages);
+    console.log(twitchMessagesBuffer);
+
+    if(twitchMessages.length > twitchMessagesBuffer.length) {
+      twitchMessagesBuffer.push(twitchMessages[0]);
+      twitchMessages.shift();
+    }
+
+    if(twitchMessagesBuffer.length > 8) {
+      twitchMessagesBuffer.shift()
+    }
+
     twitchStory = "";
 
-    twitchMessages.forEach( message => {
+    twitchMessagesBuffer.forEach( message => {
       if(message.isBeforeDialogTag) {
         twitchStory += ` ${message.username} ${message.dialogTag}, "${message.message}." \n\n`;
       }
@@ -92,7 +109,12 @@ function draw() {
 
   push();
   fill(60);
-  text(twitchStory, windowWidth - 300, 0 + 50, 300 - 50, windowHeight);
+  text(
+    twitchStory,
+    windowWidth - 400,
+    0 + twitchChatOutputPadding,
+    400 - (twitchChatOutputPadding * 2),
+    windowHeight - (twitchChatOutputPadding * 2));
   pop();
 
   start -= interval;
