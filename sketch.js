@@ -1,5 +1,5 @@
 const twitch = new tmi.Client({
-  channels: ['LCK', 'KaiCenat', 'amouranth'],
+  channels: ['Ninja', 'Pokimane', 'KaiCenat', 'amouranth'],
 });
 
 let twitchMessages = [];
