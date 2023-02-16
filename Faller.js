@@ -4,7 +4,7 @@ class Faller {
         this.velocity = createVector(0, -6);
         this.acceleration = createVector(0, 0.25);
         this.character = config.character;
-        this.opacity = random(0.01, 0.40);
+        this.opacity = random(0.01, 0.50);
     }
 
     drawFaller() {

@@ -85,7 +85,7 @@ function windowResized() {
 }
 
 function draw() {
-  background(210, 15, 70, 1);
+  background(210, 20, 80, 1);
   
   if(millis() >= nextMillis) {
     console.log(twitchMessages);
@@ -115,7 +115,7 @@ function draw() {
   }
 
   push();
-  fill(0, 0, 20, 1);
+  fill(210, 10, 30, 1);
   text(
     twitchStory,
     windowWidth - 400,
@@ -154,7 +154,7 @@ function printBumpyCharacters(characters, yOffset) {
     }
     
     push();
-    fill(210, 10, map(charPosition.y, 0, 180, 90, 0), 1);
+    fill(210, 12, map(charPosition.y, 0, 180, 88, 0), 1);
     text(character, charPosition.x, charPosition.y + yOffset);
     pop();
     
