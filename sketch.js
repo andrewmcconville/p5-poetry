@@ -1,5 +1,5 @@
 const twitch = new tmi.Client({
-  channels: ['LCK'],
+  channels: ['LCK', 'KaiCenat'],
 });
 
 let twitchMessages = [];
@@ -24,7 +24,7 @@ let twitchAfterDialogueTags = [
   "chimed in while giggling",
   "sang for all to hear",
 ];
-let twitchStoryTimer = 2000;
+let twitchStoryTimer = 0;
 let nextMillis = twitchStoryTimer;
 
 
