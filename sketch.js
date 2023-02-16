@@ -1,5 +1,5 @@
 const twitch = new tmi.Client({
-  channels: ['Ninja', 'Pokimane', 'KaiCenat', 'amouranth'],
+  channels: ['Ninja', 'mirggles', 'Pokimane', 'chess', 'KaiCenat', 'amouranth'],
 });
 
 let twitchMessages = [];
@@ -14,6 +14,9 @@ let twitchBeforeDialogueTags = [
   "thought to themselves",
   "giggled and said",
   "sang for all to hear",
+  "mashed loudly on the keyboard typing",
+  "looked around and proclaimed",
+  "methodically wrote",
 ];
 let twitchAfterDialogueTags = [
   "bellowed loudly",
@@ -24,6 +27,9 @@ let twitchAfterDialogueTags = [
   "thought to themselves",
   "chimed in while giggling",
   "sang for all to hear",
+  "mashed loudly on the keyboard",
+  "proclaimed while looking around the room",
+  "wrote methodically",
 ];
 let twitchStoryTimer = 3000;
 let nextMillis = 0;
@@ -61,13 +67,14 @@ function setup() {
     }
   });
   twitchMessages.push({
-    message: "I'm connecting you now",
+    message: "One moment, I'm connecting you now",
     username: "Twitch bot",
     isBeforeDialogTag: false,
-    dialogTag: "printed to the screen, then began to patiently listen",
+    dialogTag: "printed to the screen, then began to listen patiently",
   });
 
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight);  
+  colorMode(HSL, 360, 100, 100, 1);
   noStroke();
   noFill();
   textSize(16);
@@ -78,7 +85,7 @@ function windowResized() {
 }
 
 function draw() {
-  background(180);
+  background(210, 15, 70, 1);
   
   if(millis() >= nextMillis) {
     console.log(twitchMessages);
@@ -108,7 +115,7 @@ function draw() {
   }
 
   push();
-  fill(60);
+  fill(0, 0, 20, 1);
   text(
     twitchStory,
     windowWidth - 400,
@@ -122,7 +129,7 @@ function draw() {
 
   sentences.forEach((sentence, index) => {
     charPosition = createVector(100, 0);
-    printBumpyCharacters(sentence.split(""), index * 100);
+    printBumpyCharacters(sentence.split(""), index * 80);
   });
 
   fallingLetters.forEach((letter, index) => {
@@ -138,7 +145,7 @@ function printBumpyCharacters(characters, yOffset) {
   characters.forEach(character => {
     charPosition.y = map(noise(xoff), 0, 1, 0, 180);
 
-    if(random() < 0.01) {
+    if(random() < 0.005) {
       fallingLetters.push(
         new Faller({
         position: createVector(charPosition.x, charPosition.y + yOffset),
@@ -147,7 +154,7 @@ function printBumpyCharacters(characters, yOffset) {
     }
     
     push();
-    fill(map(charPosition.y, 0, 180, 220, 0));
+    fill(210, 10, map(charPosition.y, 0, 180, 90, 0), 1);
     text(character, charPosition.x, charPosition.y + yOffset);
     pop();
     
