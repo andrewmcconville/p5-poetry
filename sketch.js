@@ -1,6 +1,6 @@
-const twitch = new tmi.Client({
-  channels: ['Ninja', 'mirggles', 'Pokimane', 'chess', 'KaiCenat', 'amouranth'],
-});
+// const twitch = new tmi.Client({
+//   channels: ['Ninja', 'mirggles', 'Pokimane', 'chess', 'KaiCenat', 'amouranth'],
+// });
 
 let twitchMessages = [];
 let twitchMessagesBuffer = [];
@@ -51,27 +51,27 @@ let interval = 0.001;
 let fallingLetters = [];
 
 function setup() {
-  twitch.connect().then(() => {
-    console.log('connected')
-  });
-  twitch.on('message', (channelName, tags, message, isSelf) => {
-    if(twitchMessages.length < 50) {
-      twitchMessages.push(
-        {
-          message: message,
-          username: tags.username,
-          isBeforeDialogTag: random() < 0.5 ? true : false,
-          dialogTag: random(twitchAfterDialogueTags),
-        }
-      );
-    }
-  });
-  twitchMessages.push({
-    message: "One moment, I'm connecting you now",
-    username: "Twitch bot",
-    isBeforeDialogTag: false,
-    dialogTag: "printed to the screen, then began to listen patiently",
-  });
+  // twitch.connect().then(() => {
+  //   console.log('connected')
+  // });
+  // twitch.on('message', (channelName, tags, message, isSelf) => {
+  //   if(twitchMessages.length < 50) {
+  //     twitchMessages.push(
+  //       {
+  //         message: message,
+  //         username: tags.username,
+  //         isBeforeDialogTag: random() < 0.5 ? true : false,
+  //         dialogTag: random(twitchAfterDialogueTags),
+  //       }
+  //     );
+  //   }
+  // });
+  // twitchMessages.push({
+  //   message: "One moment, I'm connecting you now",
+  //   username: "Twitch bot",
+  //   isBeforeDialogTag: false,
+  //   dialogTag: "printed to the screen, then began to listen patiently",
+  // });
 
   createCanvas(windowWidth, windowHeight);  
   colorMode(HSL, 360, 100, 100, 1);
